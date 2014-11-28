@@ -1,5 +1,5 @@
 
-package stockscreener.json.option;
+package coveredcallscreener.domain.json.option;
 
 import java.util.HashMap;
 import java.util.Map;

@@ -6,7 +6,9 @@ package coveredcallscreener.readers;
 
 import com.fasterxml.jackson.core.JsonParser;
 import com.fasterxml.jackson.databind.ObjectMapper;
+import coveredcallscreener.domain.json.option.Expiration;
 import coveredcallscreener.domain.json.option.GoogleOptionsJson;
+import coveredcallscreener.domain.json.stock.GoogleStockJson;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.MalformedURLException;
@@ -15,8 +17,7 @@ import java.text.MessageFormat;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import stockscreener.json.option.Expiration;
-import stockscreener.json.stock.GoogleStockJson;
+
 
 /**
  *

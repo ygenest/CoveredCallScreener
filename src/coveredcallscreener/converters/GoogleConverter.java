@@ -7,14 +7,16 @@ package coveredcallscreener.converters;
 import coveredcallscreener.domain.OptionQuote;
 import coveredcallscreener.domain.StockQuote;
 import coveredcallscreener.domain.json.option.Call;
+import coveredcallscreener.domain.json.option.Expiration;
 import coveredcallscreener.domain.json.option.GoogleOptionsJson;
+import coveredcallscreener.domain.json.stock.GoogleStockJson;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
-import stockscreener.json.option.Expiration;
-import stockscreener.json.stock.GoogleStockJson;
+
+
 
 /**
  *

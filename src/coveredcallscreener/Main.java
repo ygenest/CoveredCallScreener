@@ -7,7 +7,9 @@ package coveredcallscreener;
 import coveredcallscreener.converters.GoogleConverter;
 import coveredcallscreener.domain.OptionQuote;
 import coveredcallscreener.domain.StockQuote;
+import coveredcallscreener.domain.json.option.Expiration;
 import coveredcallscreener.domain.json.option.GoogleOptionsJson;
+import coveredcallscreener.domain.json.stock.GoogleStockJson;
 import coveredcallscreener.filters.CallOptionsFilter;
 import coveredcallscreener.readers.GoogleStockReader;
 import coveredcallscreener.readers.TsxOptionsReader;
@@ -21,8 +23,8 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
-import stockscreener.json.option.Expiration;
-import stockscreener.json.stock.GoogleStockJson;
+
+
 
 
 /**
