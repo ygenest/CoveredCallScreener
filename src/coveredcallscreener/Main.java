@@ -45,7 +45,7 @@ public class Main {
                 switch (args[i].charAt(1)) {
                     case 'd':
                         LOGGER.setLevel(Level.INFO);
-                        LOGGER.log(Level.INFO, "En mode debuggage");
+                        LOGGER.log(Level.INFO, "In debugging mode");
                         break;
                     case 'o':
 
