@@ -29,6 +29,9 @@ public class GoogleStockReader {
     private final static String URLOPTIONEXP = "http://www.google.com/finance/option_chain?q={0}&output=json";
     private final static String URLOPTION = "http://www.google.com/finance/option_chain?q={0}&output=json&expy={1,number,####}&expm={2}&expd={3}";
     private final static byte SLASH = 47;
+    private final static byte BYTESTOSKIP = 5;
+    private final static byte FIRST= 1;
+    private final static byte SECOND= 2;
 
     public GoogleStockJson readStockQuote(String symbol) {
         LOGGER.log(Level.INFO, "Entering readStockQuote with {0}",symbol);
@@ -38,9 +41,9 @@ public class GoogleStockReader {
             URL url = new URL(surl);
             InputStream is = url.openStream();
             // a valid response from google start with "//"
-            byte[] b = new byte[5];
+            byte[] b = new byte[BYTESTOSKIP];
             is.read(b, 0, 5);
-            if (b[1] == SLASH && b[2] == SLASH) {
+            if (b[FIRST] == SLASH && b[SECOND] == SLASH) {
                 LOGGER.log(Level.INFO, "Google response starts with expected // characters for {0}",symbol);
                 ObjectMapper mapper = new ObjectMapper();
                 mapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);

@@ -5,14 +5,16 @@
 package coveredcallscreener.readers;
 
 import coveredcallscreener.domain.StockQuote;
+import coveredcallscreener.domain.json.option.Expiration;
 import coveredcallscreener.domain.json.option.GoogleOptionsJson;
+import coveredcallscreener.domain.json.stock.GoogleStockJson;
 import java.util.List;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
 import org.junit.Test;
-import stockscreener.json.option.Expiration;
+
 import static org.junit.Assert.*;
-import stockscreener.json.stock.GoogleStockJson;
+
 
 /**
  *

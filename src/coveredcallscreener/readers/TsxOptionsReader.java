@@ -35,12 +35,12 @@ public class TsxOptionsReader {
             doc = Jsoup.connect(surl).get();
         } catch (IOException ex) {
             LOGGER.log(Level.SEVERE, "Problem accessing TSX", ex);
-            return null;
+            return optionQuotes;
         }
         Elements tds = doc.getElementsByTag("TD");
         if (tds.size() == 0) {
             LOGGER.log(Level.INFO,"No TD tag on this page. returning...");
-            return null;
+            return optionQuotes;
         }
         int count = 0;
         OptionQuote op = null;

@@ -17,8 +17,8 @@ The output will a comma delimited file with the same name but with the .csv exte
 
 The programm can process US and Canadian options. Here is an example of the output (executed on nov. 26 2014):
 
-Symbol	Name	              Expiry Date Stock Price	Strike	  Bid	  Ask	  Last	Volume	  Open Int	 Yield Opt	Yield Cap Gain Div Yield	
-F	      Ford Motor Company	2016-01-15	15.65	      17	      0.97	1.01	1	    10	      117088	    6.3	      8.6	                3.2
+    Symbol  Name                Expiry Date     Stock Price Strike  Bid     Ask     Last    Volume  Open Int    Yield Opt   Yield Cap Gain  Div Yield	
+    F       Ford Motor Company  2016-01-15      15.65       17      0.97    1.01    1       10      117088      6.3         8.6             3.2
 ...
 
 From the example we can see that if you sell a covered call option (you have to own the stock) you will get 1$ (for a yield of 6.3%) per share for
