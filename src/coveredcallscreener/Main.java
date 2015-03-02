@@ -15,7 +15,6 @@ import coveredcallscreener.readers.GoogleStockReader;
 import coveredcallscreener.readers.TsxOptionsReader;
 import coveredcallscreener.writers.CsvWriter;
 import java.io.BufferedReader;
-import java.io.Console;
 import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
@@ -25,15 +24,14 @@ import java.util.List;
 import java.util.logging.Level;
 import java.util.logging.Logger;
 
-
-
-
 /**
  *
  * @author Yves
  */
 public class Main {
+
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     /**
      * @param args the command line arguments
      */
@@ -41,6 +39,7 @@ public class Main {
         LOGGER.setLevel(Level.WARNING);
         System.out.println("Processisng...");
         boolean invalidArg = false;
+        boolean putOption = false;
 
         String fname = null;
         for (int i = 0; i < args.length; i++) {
@@ -50,11 +49,12 @@ public class Main {
                         LOGGER.setLevel(Level.INFO);
                         LOGGER.log(Level.INFO, "In debugging mode");
                         break;
-                    case 'o':
 
-                        break;
                     case 'z':
                         CallOptionsFilter.setNoZeroInterest(true);
+                        break;
+                    case 'p':
+                        putOption = true;
                         break;
                     case 's':
                         CallOptionsFilter.setNoStrikeBelowCurrent(true);
@@ -72,7 +72,7 @@ public class Main {
             System.out.println("Where possible options include");
             System.out.println("\t-d\tActivate debug mode");
             System.out.println("\t-s\tignore share price above strike price");
-            System.out.println("\t-s<n>\twhere n is an integer (1-9) indicating how many strike price to output over current price");
+            System.out.println("\t-z\tignore zero open interest quotes");
             return;
         }
         File file = new File(fname.replace(".txt", ".csv"));
@@ -86,7 +86,7 @@ public class Main {
         // load all symbols from file
         List<String> symbols = loadData(fname);
         GoogleStockReader googleStockReader = new GoogleStockReader();
-        TsxOptionsReader tsxOptionsReader = new TsxOptionsReader();
+        TsxOptionsReader tsxOptionsReader = new TsxOptionsReader(putOption);
         GoogleConverter googleConverter = new GoogleConverter();
         GoogleStockJson googleStockJson;
         List<StockQuote> stockQuotes = new ArrayList<StockQuote>();
@@ -106,7 +106,7 @@ public class Main {
                     System.out.println("No option defined for TSX symbol " + symbol);
                     continue;
                 } else {
-                    nbLine+=addOptionQuote(optionQuotes,stockQuote);
+                    nbLine += addOptionQuote(optionQuotes, stockQuote, putOption);
                 }
             } else {
                 // process symbols for US exchanges
@@ -125,8 +125,8 @@ public class Main {
                 for (Expiration expiration : expirations) {
                     GoogleOptionsJson googleOptionsJson = googleStockReader.readOptionQuote(symbol, expiration);
                     List<OptionQuote> optionQuotes = googleConverter.convertOption(googleOptionsJson, expiration);
-                    nbLine+=addOptionQuote(optionQuotes,stockQuote);
-                    
+                    nbLine += addOptionQuote(optionQuotes, stockQuote, putOption);
+
                 }
 
             }
@@ -137,11 +137,11 @@ public class Main {
         System.out.println(nbLine + " option quotes written to file " + file.getName());
     }
 
-    private static int addOptionQuote(List<OptionQuote> optionQuotes, StockQuote stockQuote) {
-        int count=0;
+    private static int addOptionQuote(List<OptionQuote> optionQuotes, StockQuote stockQuote, boolean putOption) {
+        int count = 0;
         for (OptionQuote optionQuote : optionQuotes) {
             optionQuote.setStockPrice(stockQuote.getLast());
-            if (CallOptionsFilter.filter(optionQuote)) {      
+            if (CallOptionsFilter.filter(optionQuote, putOption)) {
                 stockQuote.getOptionQuotes().add(optionQuote);
                 count++;
             }

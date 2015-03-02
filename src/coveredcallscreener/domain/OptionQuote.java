@@ -32,6 +32,11 @@ public class OptionQuote {
         return priceToCalculateYield;
     }
 
+    public int getDaysBeforeExpiry() {
+        Date now = new Date();
+        return this.daysBetween(now, exparyDate);
+    }
+
     public double getCallYield() {
         return this.getPriceToCalculateYield() / this.getStockPrice() * 100;
     }
@@ -39,7 +44,6 @@ public class OptionQuote {
     public double getCapGainYield() {
         return (this.getStrike() - this.getStockPrice()) / this.getStockPrice() * 100;
     }
-
 
     public double getTotalYieldAnnualize() {
         return 0;
@@ -159,5 +163,9 @@ public class OptionQuote {
      */
     public void setStockPrice(double stockPrice) {
         this.stockPrice = stockPrice;
+    }
+
+    private int daysBetween(Date d1, Date d2) {
+        return (int) ((d2.getTime() - d1.getTime()) / (1000 * 60 * 60 * 24));
     }
 }

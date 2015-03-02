@@ -16,13 +16,12 @@ import java.util.GregorianCalendar;
 import java.util.List;
 import java.util.logging.Logger;
 
-
-
 /**
  *
  * @author Yves
  */
 public class GoogleConverter {
+
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static final int UNDEFINED = -1;
 
@@ -32,13 +31,16 @@ public class GoogleConverter {
         stockQuote.setSymbol(googleStockJson.getSymbol());
         try {
             stockQuote.setDividendYield(Double.parseDouble(googleStockJson.getDy()));
-        }
-        catch (java.lang.NumberFormatException e) {
+        } catch (java.lang.NumberFormatException e) {
+            stockQuote.setDividendYield(UNDEFINED);
+        } catch (java.lang.NullPointerException e) {
             stockQuote.setDividendYield(UNDEFINED);
         }
         try {
             stockQuote.setLast(Double.parseDouble(googleStockJson.getL()));
         } catch (java.lang.NumberFormatException e) {
+            stockQuote.setLast(UNDEFINED);
+        } catch (java.lang.NullPointerException e) {
             stockQuote.setLast(UNDEFINED);
         }
         return stockQuote;

@@ -21,32 +21,34 @@ import java.util.logging.Logger;
  * @author Yves
  */
 public class CsvWriter {
+
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+
     public void write(List<StockQuote> stockQuotes, File fname) {
-        LOGGER.log(Level.INFO,"Entering CsvWriter");
+        LOGGER.log(Level.INFO, "Entering CsvWriter");
         try {
             FileWriter fw = new FileWriter(fname);
             PrintWriter pw = new PrintWriter(fw);
-            pw.println("Symbol;Name;Expiry Date;Stock Price;Strike;Bid;Ask;Last;Volume;Open Int; Yield Opt;Yield Cap Gain;Div Yield");
+            pw.println("Symbol;Name;Expiry Date;Stock Price;Strike;Bid;Ask;Last;Volume;Open Int; Yield Opt;Yield Cap Gain;Div Yield;Put Val");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
-            LOGGER.log(Level.INFO,"Stock quotes to write: {0}",stockQuotes.size());
+            LOGGER.log(Level.INFO, "Stock quotes to write: {0}", stockQuotes.size());
             for (StockQuote stockQuote : stockQuotes) {
                 if (stockQuote.getOptionQuotes() != null) {
-                    LOGGER.log(Level.INFO,"Option quotes to write: {0} for {1}",new Object[]{stockQuote.getOptionQuotes().size(),stockQuote.getSymbol()});
+                    LOGGER.log(Level.INFO, "Option quotes to write: {0} for {1}", new Object[]{stockQuote.getOptionQuotes().size(), stockQuote.getSymbol()});
                     for (OptionQuote optionQuote : stockQuote.getOptionQuotes()) {
                         String expDate;
-                        if (optionQuote.getExparyDate()!=null) {
-                            expDate=sdf.format(optionQuote.getExparyDate());
+                        if (optionQuote.getExparyDate() != null) {
+                            expDate = sdf.format(optionQuote.getExparyDate());
+                        } else {
+                            LOGGER.log(Level.INFO, "Null expiry date for option {0}", stockQuote.getSymbol());
+                            expDate = "??";
                         }
-                        else {
-                            LOGGER.log(Level.INFO,"Null expiry date for option {0}",stockQuote.getSymbol());
-                            expDate="??";
-                        }
-                        
-                        pw.format(Locale.US, "%s;%s;%s;%7.2f;%7.2f;%7.2f;%7.2f;%7.2f;%d;%d;%5.1f;%5.1f;%5.1f",
+
+                        double putVal = (optionQuote.getAsk() / (stockQuote.getLast() - optionQuote.getStrike()) / optionQuote.getDaysBeforeExpiry());
+                        pw.format(Locale.US, "%s;%s;%s;%7.2f;%7.2f;%7.2f;%7.2f;%7.2f;%d;%d;%5.1f;%5.1f;%5.1f;%7.2f",
                                 stockQuote.getSymbol(),
                                 stockQuote.getName(),
-                                expDate ,
+                                expDate,
                                 stockQuote.getLast(),
                                 optionQuote.getStrike(),
                                 optionQuote.getBid(),
@@ -56,14 +58,13 @@ public class CsvWriter {
                                 optionQuote.getOpenInt(),
                                 optionQuote.getCallYield(),
                                 optionQuote.getCapGainYield(),
-                                stockQuote.getDividendYield()
-                               );
+                                stockQuote.getDividendYield(),
+                                putVal
+                        );
                         pw.println();
                     }
-                }
-                else
-                {
-                    LOGGER.log(Level.INFO,"No option quote for ",stockQuote.getSymbol());
+                } else {
+                    LOGGER.log(Level.INFO, "No option quote for ", stockQuote.getSymbol());
                 }
             }
             pw.close();

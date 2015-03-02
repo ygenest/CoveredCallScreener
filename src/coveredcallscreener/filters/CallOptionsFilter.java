@@ -12,19 +12,23 @@ import java.util.logging.Logger;
  * @author Yves
  */
 public class CallOptionsFilter {
+
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
     private static boolean noZeroInterest = false;
-    private static int percentageAboveStrike=0;
+    private static int percentageAboveStrike = 0;
     private static boolean noStrikeBelowCurrent = false;
 
-    public static boolean filter(OptionQuote optionQuote) {
+    public static boolean filter(OptionQuote optionQuote, boolean put) {
         if (isNoZeroInterest() && optionQuote.getOpenInt() < 1) {
             return false;
         }
-        if (percentageAboveStrike>0) {
+        if (percentageAboveStrike > 0) {
 
         }
-        if (noStrikeBelowCurrent && optionQuote.getStrike()<optionQuote.getStockPrice()) {
+        if (put && noStrikeBelowCurrent && optionQuote.getStrike() >= optionQuote.getStockPrice()) {
+            return false;
+        }
+        if (!put && noStrikeBelowCurrent && optionQuote.getStrike() <= optionQuote.getStockPrice()) {
             return false;
         }
         return true;
@@ -43,7 +47,6 @@ public class CallOptionsFilter {
     public static void setNoZeroInterest(boolean aNoZeroInterest) {
         noZeroInterest = aNoZeroInterest;
     }
-
 
     /**
      * @return the noStrikeBelowCurrent
