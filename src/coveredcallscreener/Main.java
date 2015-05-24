@@ -93,7 +93,7 @@ public class Main {
         int nbLine = 0;
         for (String symbol : symbols) {
             StockQuote stockQuote = null;
-            if (symbol.endsWith(".TO")) {
+            if (symbol.toUpperCase().endsWith(".TO")) {
                 // process symbols for TSX exchange
                 googleStockJson = googleStockReader.readStockQuote("TSE:" + symbol.replace(".TO", ""));
                 stockQuote = googleConverter.convertStock(googleStockJson);
