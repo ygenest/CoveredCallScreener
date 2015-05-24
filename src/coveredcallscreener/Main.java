@@ -73,6 +73,7 @@ public class Main {
             System.out.println("\t-d\tActivate debug mode");
             System.out.println("\t-s\tignore share price above strike price");
             System.out.println("\t-z\tignore zero open interest quotes");
+            System.out.println("\t-p\tshow put options quotes");
             return;
         }
         File file = new File(fname.replace(".txt", ".csv"));
@@ -92,8 +93,9 @@ public class Main {
         List<StockQuote> stockQuotes = new ArrayList<StockQuote>();
         int nbLine = 0;
         for (String symbol : symbols) {
+            symbol = symbol.toUpperCase();
             StockQuote stockQuote = null;
-            if (symbol.toUpperCase().endsWith(".TO")) {
+            if (symbol.endsWith(".TO")) {
                 // process symbols for TSX exchange
                 googleStockJson = googleStockReader.readStockQuote("TSE:" + symbol.replace(".TO", ""));
                 stockQuote = googleConverter.convertStock(googleStockJson);
