@@ -5,6 +5,8 @@
 package coveredcallscreener.filters;
 
 import coveredcallscreener.domain.OptionQuote;
+import java.util.Calendar;
+import java.util.Date;
 import java.util.logging.Logger;
 
 /**
@@ -19,6 +21,8 @@ public class CallOptionsFilter {
     private static boolean noStrikeBelowCurrent = false;
 
     public static boolean filter(OptionQuote optionQuote, boolean put) {
+        if (optionQuote.getExparyDate().after(null))
+        
         if (isNoZeroInterest() && optionQuote.getOpenInt() < 1) {
             return false;
         }
@@ -75,5 +79,19 @@ public class CallOptionsFilter {
     public void setPercentageAboveStrike(int percentageAboveStrike) {
         this.percentageAboveStrike = percentageAboveStrike;
     }
+    public void setExparyMonth(String expMonth) {
+        
+    }
+    
+    private static Calendar getThirdSaturday(Date startDate) {
+    Calendar c = Calendar.getInstance();
+    c.setTime(startDate);
+    int day = c.get(Calendar.DAY_OF_WEEK);
+    while (day != 6) {
+        c.add(Calendar.DATE, 1);
+        day = c.get(Calendar.DAY_OF_WEEK);
+    }
+    return c;
+}
 
 }

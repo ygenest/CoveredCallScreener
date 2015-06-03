@@ -113,11 +113,12 @@ public class Main {
             } else {
                 // process symbols for US exchanges
                 googleStockJson = googleStockReader.readStockQuote(symbol);
-                stockQuote = googleConverter.convertStock(googleStockJson);
-                if (stockQuote == null) {
+                if (googleStockJson == null) {
                     System.out.println("Skipping unknown US symbol " + symbol);
                     continue;
                 }
+                stockQuote = googleConverter.convertStock(googleStockJson);
+
 
                 List<Expiration> expirations = googleStockReader.readOptionExpiration(symbol);
                 if (expirations == null) {

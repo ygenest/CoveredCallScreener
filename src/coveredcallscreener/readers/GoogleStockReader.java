@@ -39,6 +39,7 @@ public class GoogleStockReader {
         String surl = MessageFormat.format(URLSTOCK, symbol);
         try {
             URL url = new URL(surl);
+            LOGGER.log(Level.INFO, "URL:{0}",surl);
             InputStream is = url.openStream();
             // a valid response from google start with "//"
             byte[] b = new byte[BYTESTOSKIP];
