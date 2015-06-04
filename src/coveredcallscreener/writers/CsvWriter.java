@@ -24,12 +24,12 @@ public class CsvWriter {
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public void write(List<StockQuote> stockQuotes, File fname) {
+    public void write(List<StockQuote> stockQuotes, File fname, boolean unique) {
         LOGGER.log(Level.INFO, "Entering CsvWriter");
         try {
             FileWriter fw = new FileWriter(fname);
             PrintWriter pw = new PrintWriter(fw);
-            pw.println("Symbol;Name;Expiry Date;Stock Price;Strike;Bid;Ask;Last;Volume;Open Int; Yield Opt;Yield Cap Gain;Div Yield;Put Val");
+            pw.println("Symbol;Name;Expiry Date;Stock Price;Strike;Bid;Ask;Last;Volume;Open Int; Yield Opt;Yield Cap Gain;Div Yield;Put Val;Rate");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             LOGGER.log(Level.INFO, "Stock quotes to write: {0}", stockQuotes.size());
             for (StockQuote stockQuote : stockQuotes) {
@@ -45,7 +45,7 @@ public class CsvWriter {
                         }
 
                         double putVal = (optionQuote.getAsk() / (stockQuote.getLast() - optionQuote.getStrike()) / optionQuote.getDaysBeforeExpiry());
-                        pw.format(Locale.US, "%s;%s;%s;%7.2f;%7.2f;%7.2f;%7.2f;%7.2f;%d;%d;%5.1f;%5.1f;%5.1f;%7.2f",
+                        pw.format(Locale.US, "%s;%s;%s;%7.2f;%7.2f;%7.2f;%7.2f;%7.2f;%d;%d;%5.1f;%5.1f;%5.1f;%7.2f;%5.2f",
                                 stockQuote.getSymbol(),
                                 stockQuote.getName(),
                                 expDate,
@@ -59,9 +59,11 @@ public class CsvWriter {
                                 optionQuote.getCallYield(),
                                 optionQuote.getCapGainYield(),
                                 stockQuote.getDividendYield(),
-                                putVal
+                                putVal,
+                                (optionQuote.getLast() / optionQuote.getStrike()) * 100
                         );
                         pw.println();
+                        if (unique) break;
                     }
                 } else {
                     LOGGER.log(Level.INFO, "No option quote for ", stockQuote.getSymbol());

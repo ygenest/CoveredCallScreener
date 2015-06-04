@@ -40,6 +40,7 @@ public class Main {
         System.out.println("Processisng...");
         boolean invalidArg = false;
         boolean putOption = false;
+        boolean unique = false;
 
         String fname = null;
         for (int i = 0; i < args.length; i++) {
@@ -48,6 +49,9 @@ public class Main {
                     case 'd':
                         LOGGER.setLevel(Level.INFO);
                         LOGGER.log(Level.INFO, "In debugging mode");
+                        break;
+                    case 'e':
+                        CallOptionsFilter.setExpMonth(args[i].toString().substring(2));
                         break;
 
                     case 'z':
@@ -58,7 +62,9 @@ public class Main {
                         break;
                     case 's':
                         CallOptionsFilter.setNoStrikeBelowCurrent(true);
-
+                        break;
+                    case 'u':
+                        unique=true;
                         break;
                     default:
                         invalidArg = true;
@@ -74,6 +80,8 @@ public class Main {
             System.out.println("\t-s\tignore share price above strike price");
             System.out.println("\t-z\tignore zero open interest quotes");
             System.out.println("\t-p\tshow put options quotes");
+            System.out.println("\t-e\tShow only options for expiry date YYYYMM");
+            System.out.println("\t-u\tShow only one option. Should be used with -s");
             return;
         }
         File file = new File(fname.replace(".txt", ".csv"));
@@ -99,6 +107,7 @@ public class Main {
                 // process symbols for TSX exchange
                 googleStockJson = googleStockReader.readStockQuote("TSE:" + symbol.replace(".TO", ""));
                 stockQuote = googleConverter.convertStock(googleStockJson);
+                stockQuote.setSymbol(googleStockJson.getSymbol() + ":" + googleStockJson.getExchange());
                 if (stockQuote == null) {
                     System.out.println("Skipping unknown TSX symbol " + symbol);
                     continue;
@@ -119,7 +128,6 @@ public class Main {
                 }
                 stockQuote = googleConverter.convertStock(googleStockJson);
 
-
                 List<Expiration> expirations = googleStockReader.readOptionExpiration(symbol);
                 if (expirations == null) {
                     System.out.println("No option defined for US symbol " + symbol);
@@ -136,7 +144,7 @@ public class Main {
             stockQuotes.add(stockQuote);
         }
         CsvWriter csvWriter = new CsvWriter();
-        csvWriter.write(stockQuotes, file);
+        csvWriter.write(stockQuotes, file,unique);
         System.out.println(nbLine + " option quotes written to file " + file.getName());
     }
 

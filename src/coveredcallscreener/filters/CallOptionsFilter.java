@@ -7,6 +7,7 @@ package coveredcallscreener.filters;
 import coveredcallscreener.domain.OptionQuote;
 import java.util.Calendar;
 import java.util.Date;
+import java.util.GregorianCalendar;
 import java.util.logging.Logger;
 
 /**
@@ -19,9 +20,17 @@ public class CallOptionsFilter {
     private static boolean noZeroInterest = false;
     private static int percentageAboveStrike = 0;
     private static boolean noStrikeBelowCurrent = false;
+    private static Calendar expDate;
 
     public static boolean filter(OptionQuote optionQuote, boolean put) {
-        if (optionQuote.getExparyDate().after(null))
+         if (expDate != null) {
+             Date d1 = expDate.getTime();
+             Date d2 = optionQuote.getExparyDate();
+             if (!d1.equals(d2)) {
+                 return false;
+             }
+         }
+
         
         if (isNoZeroInterest() && optionQuote.getOpenInt() < 1) {
             return false;
@@ -83,15 +92,21 @@ public class CallOptionsFilter {
         
     }
     
-    private static Calendar getThirdSaturday(Date startDate) {
-    Calendar c = Calendar.getInstance();
-    c.setTime(startDate);
-    int day = c.get(Calendar.DAY_OF_WEEK);
-    while (day != 6) {
-        c.add(Calendar.DATE, 1);
-        day = c.get(Calendar.DAY_OF_WEEK);
-    }
-    return c;
-}
+     public static void setExpMonth(String sdate) {
+         int year = Integer.parseInt(sdate.substring(0, 4));
+         int month = Integer.parseInt(sdate.substring(4, 6)) - 1;
+         Calendar c = new GregorianCalendar(year, month, 1);
+         int sat3 = 0;
+         while (sat3 != 3) {
+             if (c.get(Calendar.DAY_OF_WEEK) == 6) {
+                 ++sat3;
+             }
+             c.add(Calendar.DATE, 1);
+         }
+         c.add(Calendar.DATE, -1);
+         expDate = c;
+
+     }
+
 
 }

@@ -1,1 +1,3 @@
-Symbol;Name;Expiry Date;Stock Price;Strike;Bid;Ask;Last;Volume;Open Int; Yield Opt;Yield Cap Gain;Div Yield;Put Val
+Symbol;Name;Expiry Date;Stock Price;Strike;Bid;Ask;Last;Volume;Open Int; Yield Opt;Yield Cap Gain;Div Yield;Put Val;Rate
+XCO;EXCO Resources Inc;2017-01-20;   1.64;   2.00;  -1.00;  -1.00;   0.45;-1;1701; 27.4; 22.0; 12.2;   0.00;22.50
+XRX;Xerox Corp;2017-01-20;  11.53;  12.00;  -1.00;  -1.00;   1.27;-1;1241; 11.0;  4.1;  2.4;   0.00;10.58
