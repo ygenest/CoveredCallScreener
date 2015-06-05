@@ -46,16 +46,16 @@ public class GoogleStockReaderTest {
     @Test
     public void testReadOneStock_invalid_symbol() {
         System.out.println("readOneStock_invalid_symbol");
-        String symbol = "XXXX";
+        String symbol = "XYYX";
         GoogleStockReader instance = new GoogleStockReader();
         GoogleStockJson result = instance.readStockQuote(symbol);
-        assertEquals(null, result);
+        assertNull("Unexpected content returned for invalid US symbol", result);
     }
 
     @Test
     public void testReadOptionExpiration() {
         System.out.println("testReadOptionExpiration");
-        String symbol = "SPY";
+        String symbol = "F";
         GoogleStockReader instance = new GoogleStockReader();
         List<Expiration> result = instance.readOptionExpiration(symbol);
         assertTrue(result.size()>0);

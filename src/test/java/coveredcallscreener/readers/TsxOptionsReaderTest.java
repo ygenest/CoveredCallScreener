@@ -34,7 +34,7 @@ public class TsxOptionsReaderTest {
         String symbol = "SU";
         TsxOptionsReader instance = new TsxOptionsReader(false);
         List result = instance.readOptionQuote(symbol);
-        assertTrue(result.size() > 0);
+        assertTrue("No result returned for TSX symbol SU",result.size() > 0);
     }
 
     @Test
@@ -43,7 +43,7 @@ public class TsxOptionsReaderTest {
         String symbol = "XXX";
         TsxOptionsReader instance = new TsxOptionsReader(false);
         List result = instance.readOptionQuote(symbol);
-        assertNull(result);
+        assertTrue("Unexpected content returned for invalid tsx symbol",result.isEmpty());
     }
 
 }
