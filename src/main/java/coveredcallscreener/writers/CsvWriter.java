@@ -6,9 +6,13 @@ package coveredcallscreener.writers;
 
 import coveredcallscreener.domain.OptionQuote;
 import coveredcallscreener.domain.StockQuote;
+
+import java.io.ByteArrayOutputStream;
+import java.io.DataOutputStream;
 import java.io.File;
 import java.io.FileWriter;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.io.PrintWriter;
 import java.text.SimpleDateFormat;
 import java.util.List;
@@ -24,11 +28,14 @@ public class CsvWriter {
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
 
-    public void write(List<StockQuote> stockQuotes, File fname, boolean unique) {
-        LOGGER.log(Level.INFO, "Entering CsvWriter");
+    public ByteArrayOutputStream write(List<StockQuote> stockQuotes,  boolean unique) {
+        LOGGER.log(Level.INFO, "Entering CsvWriter file:");
+        ByteArrayOutputStream out=null;
         try {
-            FileWriter fw = new FileWriter(fname);
-            PrintWriter pw = new PrintWriter(fw);
+        	out =new ByteArrayOutputStream();
+            //FileWriter fw = new FileWriter(fname);
+            PrintWriter pw = new PrintWriter(out);
+            
             pw.println("Symbol;Name;Expiry Date;Stock Price;Strike;Bid;Ask;Last;Volume;Open Int; Yield Opt;Yield Cap Gain;Div Yield;Put Val;Rate");
             SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd");
             LOGGER.log(Level.INFO, "Stock quotes to write: {0}", stockQuotes.size());
@@ -70,10 +77,11 @@ public class CsvWriter {
                 }
             }
             pw.close();
-            fw.close();
+            out.close();
             //writer.write("",quote.getSymbol(),quote.getName(),quote.getBid(),quote.getAsk(),quote.getLast(),quote.getDividend(),quote.getExDivDate(),quote.getDivPayDate());
         } catch (IOException ex) {
             Logger.getLogger(CsvWriter.class.getName()).log(Level.SEVERE, null, ex);
         }
+        return out;
     }
 }

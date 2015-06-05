@@ -60,7 +60,7 @@ public class GoogleStockReader {
         return googleStockJson;
     }
 
-
+    // TODO: ajouter NYSE devant symbole (voir BAC)
     public List<Expiration> readOptionExpiration(String symbol) {
         LOGGER.log(Level.INFO, "Entering readOptionExpiration with {0}",symbol);
         GoogleOptionsJson googleOptionsJson = null;

@@ -14,11 +14,15 @@ import coveredcallscreener.filters.CallOptionsFilter;
 import coveredcallscreener.readers.GoogleStockReader;
 import coveredcallscreener.readers.TsxOptionsReader;
 import coveredcallscreener.writers.CsvWriter;
+
 import java.io.BufferedReader;
+import java.io.ByteArrayOutputStream;
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.io.FileOutputStream;
 import java.io.FileReader;
 import java.io.IOException;
+import java.io.OutputStream;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.logging.Level;
@@ -31,6 +35,7 @@ import java.util.logging.Logger;
 public class Main {
 
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
+	
 
     /**
      * @param args the command line arguments
@@ -144,7 +149,19 @@ public class Main {
             stockQuotes.add(stockQuote);
         }
         CsvWriter csvWriter = new CsvWriter();
-        csvWriter.write(stockQuotes, file,unique);
+        ByteArrayOutputStream out=csvWriter.write(stockQuotes,unique);
+        try {
+			OutputStream outputStream = new FileOutputStream ("testf.csv");
+			try {
+				out.writeTo(outputStream);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		} catch (FileNotFoundException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		} 
         System.out.println(nbLine + " option quotes written to file " + file.getName());
     }
 
