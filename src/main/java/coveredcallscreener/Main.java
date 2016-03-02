@@ -96,15 +96,14 @@ public class Main {
 			return;
 		}
 		File file = new File(fname.replace(".txt", ".csv"));
-		try {
-			org.apache.commons.io.FileUtils.touch(file);
 
-		} catch (IOException e) {
-			System.out.println("The file " + file.getName() + " is already opened");
-			return;
-		} finally {
-			file.delete();
-		}
+			try {
+				org.apache.commons.io.FileUtils.forceDelete(file);
+			} catch (IOException e1) {
+				e1.printStackTrace();
+				return;
+			}
+
 		// load all symbols from file
 		List<String> symbols = loadData(fname);
 		GoogleStockReader googleStockReader = new GoogleStockReader();
