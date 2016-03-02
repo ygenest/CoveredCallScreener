@@ -27,6 +27,6 @@ will have to sell the stock at 17$ and pocket a profit of 1.35$ (for a yield of 
 dividend that you will collect along the way.
 
 Once you open the csv file in a spreadsheet, you can easily sort columns to identify the best deals.
-Developed with Netbeans
+Developed with Eclipse
 
 
