@@ -50,7 +50,7 @@ public class GoogleStockReader {
                 mapper.configure(JsonParser.Feature.ALLOW_BACKSLASH_ESCAPING_ANY_CHARACTER, true);
                 googleStockJson = mapper.readValue(is, GoogleStockJson.class);
             } else {
-                LOGGER.log(Level.WARNING, "Google response did not start with expected // characters for {0}",symbol);
+                LOGGER.log(Level.WARNING, "Google response did not start with expected // characters for {0}. returning null",symbol);
                 return null;
             }
         } catch (Exception ex) {
