@@ -36,7 +36,7 @@ public class GoogleStockReaderTest {
     @Test
     public void testReadOneStock() {
         System.out.println("readOneStock");
-        String symbol = "F";
+        String symbol = "NYSE:F";
         GoogleStockReader instance = new GoogleStockReader();
         String expResult = "Ford Motor Company";
         GoogleStockJson result = instance.readStockQuote(symbol);
@@ -52,10 +52,10 @@ public class GoogleStockReaderTest {
         assertNull("Unexpected content returned for invalid US symbol", result);
     }
 
-    //@Test
+    @Test
     public void testReadOptionExpiration() {
         System.out.println("testReadOptionExpiration");
-        String symbol = "F";
+        String symbol = "NYSE:F";
         GoogleStockReader instance = new GoogleStockReader();
         List<Expiration> result = instance.readOptionExpiration(symbol);
         assertTrue(result.size()>0);
@@ -70,10 +70,10 @@ public class GoogleStockReaderTest {
         assertNull(result);
     }
 
-    //@Test
+    @Test
     public void testReadOptionQuotes() {
         System.out.println("readOptionQuotes");
-        String symbol = "F";
+        String symbol = "NYSE:F";
         GoogleStockReader instance = new GoogleStockReader();
         List<Expiration> exp = instance.readOptionExpiration(symbol);
         GoogleOptionsJson result = instance.readOptionQuote(symbol,exp.get(0));
