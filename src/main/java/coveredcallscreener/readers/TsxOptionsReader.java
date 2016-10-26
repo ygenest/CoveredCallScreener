@@ -65,10 +65,14 @@ public class TsxOptionsReader {
                 LOGGER.log(Level.INFO, "title attr=" + li);
                 String optype = (li.substring(12, 13));
                 if (optype.equals("C") && put) {
+                	count=0;
+                	op=null;
                     continue;
                 }
                 if (optype.equals("P") && !put) {
-                    break;
+                	count=0;
+                	op=null;
+                    continue;
                 }
                 op = new OptionQuote();
                 String price = li.substring(13).replace(",", ".");
@@ -105,6 +109,7 @@ public class TsxOptionsReader {
                 } else if (count == 5) {
                     op.setVolume(Long.parseLong(td.text().replace(" ", "")));
                     optionQuotes.add(op);
+                    op=null;
                     count = 0;
                 }
             }

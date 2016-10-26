@@ -99,7 +99,11 @@ public class Main {
 
 			try {
 				org.apache.commons.io.FileUtils.forceDelete(file);
-			} catch (IOException e1) {
+			} 
+			catch (FileNotFoundException e){
+				// do nothing, continue
+			}
+			catch (IOException e1) {
 				e1.printStackTrace();
 				return;
 			}
