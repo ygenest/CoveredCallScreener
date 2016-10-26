@@ -123,6 +123,10 @@ public class Main {
 			if (symbol.endsWith(".TO")) {
 				// process symbols for TSX exchange
 				googleStockJson = googleStockReader.readStockQuote("TSE:" + symbol.replace(".TO", ""));
+				if (googleStockJson==null) {
+					System.out.println("Skipping unknown CND symbol " + symbol);
+					continue;
+				}
 				stockQuote = googleConverter.convertStock(googleStockJson);
 				stockQuote.setSymbol(googleStockJson.getSymbol() + ":" + googleStockJson.getExchange());
 				if (!fondamOnly) {
