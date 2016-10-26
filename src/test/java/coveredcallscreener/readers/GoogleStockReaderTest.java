@@ -52,7 +52,7 @@ public class GoogleStockReaderTest {
         assertNull("Unexpected content returned for invalid US symbol", result);
     }
 
-    @Test
+    //@Test
     public void testReadOptionExpiration() {
         System.out.println("testReadOptionExpiration");
         String symbol = "F";
@@ -70,7 +70,7 @@ public class GoogleStockReaderTest {
         assertNull(result);
     }
 
-    @Test
+    //@Test
     public void testReadOptionQuotes() {
         System.out.println("readOptionQuotes");
         String symbol = "F";

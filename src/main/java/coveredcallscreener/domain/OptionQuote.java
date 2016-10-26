@@ -12,7 +12,7 @@ import java.util.Date;
  */
 public class OptionQuote {
 
-    private static final int UNDEFINED = -1;
+    private static final int UNDEFINED = 0;
     private double ask;
     private double bid;
     private Date exparyDate;

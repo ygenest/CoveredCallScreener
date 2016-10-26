@@ -104,7 +104,7 @@ public class Main {
 				// do nothing, continue
 			}
 			catch (IOException e1) {
-				e1.printStackTrace();
+				System.out.println("The file "+file.getName()+" is opened. Close it before running");
 				return;
 			}
 
