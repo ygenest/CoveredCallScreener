@@ -209,7 +209,7 @@ public class Main {
 				line = br.readLine();
 			}
 		} catch (FileNotFoundException ex) {
-			System.out.println("File not found " + fname);
+			System.out.println("File not found: " + fname);
 			return null;
 		} catch (IOException ex) {
 			System.out.println("Problem reading file " + fname);
