@@ -36,7 +36,7 @@ public class CsvWriter {
 			// FileWriter fw = new FileWriter(fname);
 			PrintWriter pw = new PrintWriter(out);
 			if (fondamOnly) {
-				pw.println("Symbol;Name;Stock Price; Div Yield");
+				pw.println("Symbol;Name;Stock Price; Div Yield; P/E ratio;Market Cap");
 			} else {
 				pw.println(
 						"Symbol;Name;Expiry Date;Stock Price;Strike;Bid;Ask;Last;Volume;Open Int; Yield Opt;Yield Cap Gain;Div Yield;Put Val;Rate");
@@ -45,7 +45,8 @@ public class CsvWriter {
 			LOGGER.log(Level.INFO, "Stock quotes to write: {0}", stockQuotes.size());
 			for (StockQuote stockQuote : stockQuotes) {
 				if (fondamOnly) {
-					pw.format(Locale.US, "%s;%s;%7.2f;%5.1f", stockQuote.getSymbol(),stockQuote.getName(),stockQuote.getLast(),stockQuote.getDividendYield());
+					pw.format(Locale.US, "%s;%s;%7.2f;%5.1f;%5.1f;%s", stockQuote.getSymbol(),stockQuote.getName(),
+							stockQuote.getLast(),stockQuote.getDividendYield(),stockQuote.getPeRatio(),stockQuote.getMarketCap());
 					pw.println();
 				} else {
 					if (stockQuote.getOptionQuotes() != null) {

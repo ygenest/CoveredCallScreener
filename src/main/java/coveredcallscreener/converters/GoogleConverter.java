@@ -26,9 +26,11 @@ public class GoogleConverter {
     private static final int UNDEFINED = -1;
 
     public StockQuote convertStock(GoogleStockJson googleStockJson) {
+    	System.out.println(googleStockJson.toString());
         StockQuote stockQuote = new StockQuote();
         stockQuote.setName(googleStockJson.getName());
         stockQuote.setSymbol(googleStockJson.getSymbol());
+        stockQuote.setMarketCap(googleStockJson.getMc());
         try {
             stockQuote.setDividendYield(Double.parseDouble(googleStockJson.getDy()));
         } catch (java.lang.NumberFormatException e) {
@@ -42,6 +44,13 @@ public class GoogleConverter {
             stockQuote.setLast(UNDEFINED);
         } catch (java.lang.NullPointerException e) {
             stockQuote.setLast(UNDEFINED);
+        }
+        try {
+            stockQuote.setPeRatio(Double.parseDouble(googleStockJson.getPe()));
+        } catch (java.lang.NumberFormatException e) {
+            stockQuote.setPeRatio(UNDEFINED);
+        } catch (java.lang.NullPointerException e) {
+            stockQuote.setPeRatio(UNDEFINED);
         }
         return stockQuote;
     }
