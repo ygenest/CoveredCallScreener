@@ -77,7 +77,7 @@ public class StockQuote {
     }
 
     /**
-     * @param dividend_amount the dividend_amount to set
+     * @param dividendAmount the dividend amount to set
      */
     public void setDividendAmount(double dividendAmount) {
         this.dividendAmount = dividendAmount;
