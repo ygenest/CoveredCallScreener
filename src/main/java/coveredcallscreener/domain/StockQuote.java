@@ -19,7 +19,22 @@ public class StockQuote {
     private char dividendFrequency;
     private double dividendYield;
     private double last;
-    private String name;
+    private double peRatio;
+    private String marketCap;
+    public String getMarketCap() {
+		return marketCap;
+	}
+	public void setMarketCap(String marketCap) {
+		this.marketCap = marketCap;
+	}
+	public double getPeRatio() {
+		return peRatio;
+	}
+	public void setPeRatio(double peRatio) {
+		this.peRatio = peRatio;
+	}
+
+	private String name;
     private String symbol;
     private List<OptionQuote> optionQuotes=new ArrayList<OptionQuote>();
 

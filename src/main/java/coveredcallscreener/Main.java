@@ -179,7 +179,12 @@ public class Main {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		System.out.println(nbLine + " option quotes written to file " + file.getName());
+		if (!fondamOnly) { 
+			System.out.println(nbLine + " option quotes written to file " + file.getName());
+		} else
+		{
+			System.out.println(stockQuotes.size() + " fundamentals quotes written to file " + file.getName());
+		}
 	}
 
 	private static int addOptionQuote(List<OptionQuote> optionQuotes, StockQuote stockQuote, boolean putOption) {
