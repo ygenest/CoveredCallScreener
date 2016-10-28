@@ -3,7 +3,7 @@
   <modelVersion>4.0.0</modelVersion>
   <groupId>ygenest</groupId>
   <artifactId>coveredcallscreener</artifactId>
-  <version>1.1.1-SNAPSHOT</version>
+  <version>1.1.1</version>
 
   <dependencies>
   	<dependency>
@@ -76,7 +76,7 @@
 </build>
   <scm>
   	<developerConnection>scm:git:https://github.com/ygenest/CoveredCallScreener.git</developerConnection>
-    <tag>coveredcallscreener-1.1.0</tag>
+    <tag>coveredcallscreener-1.1.1</tag>
     <url>https://github.com/ygenest/CoveredCallScreener.git</url>
   </scm>
 </project>
