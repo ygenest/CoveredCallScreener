@@ -25,7 +25,8 @@ import java.util.logging.Logger;
  */
 public class GoogleStockReader {
     private final static Logger LOGGER = Logger.getLogger(Logger.GLOBAL_LOGGER_NAME);
-    private final static String URLSTOCK = "http://www.google.com/finance?q={0}&output=json";
+    private final static String URLSTOCK = "https://finance.google.com/finance?q={0}&output=json";
+    
     private final static String URLOPTIONEXP = "http://www.google.com/finance/option_chain?q={0}&output=json";
     private final static String URLOPTION = "http://www.google.com/finance/option_chain?q={0}&output=json&expy={1,number,####}&expm={2}&expd={3}";
     private final static byte SLASH = 47;

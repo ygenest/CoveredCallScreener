@@ -11,6 +11,7 @@ import coveredcallscreener.domain.json.stock.GoogleStockJson;
 import java.util.List;
 import org.junit.AfterClass;
 import org.junit.BeforeClass;
+import org.junit.Ignore;
 import org.junit.Test;
 
 import static org.junit.Assert.*;
@@ -53,6 +54,7 @@ public class GoogleStockReaderTest {
     }
 
     @Test
+    @Ignore
     public void testReadOptionExpiration() {
         System.out.println("testReadOptionExpiration");
         String symbol = "NYSE:F";
@@ -71,6 +73,7 @@ public class GoogleStockReaderTest {
     }
 
     @Test
+    @Ignore
     public void testReadOptionQuotes() {
         System.out.println("readOptionQuotes");
         String symbol = "NYSE:F";
